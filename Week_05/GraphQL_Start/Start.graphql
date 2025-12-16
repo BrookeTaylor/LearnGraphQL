@@ -16,3 +16,12 @@ query {
     email
   }
 }
+
+mutation {
+  addPoints(userId: "1", amount: 50) {
+    id
+    name
+    points
+  }
+}
+

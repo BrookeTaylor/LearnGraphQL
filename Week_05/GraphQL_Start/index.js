@@ -17,6 +17,10 @@ const typeDefs = `#graphql
     users: [User!]!
     user(id: ID!): User
   }
+
+  type Mutation {
+    addPoints(userId: ID!, amount: Int!): User
+  }
 `;
 
 // Sample data
@@ -28,12 +32,23 @@ const users = [
 
 // Resolvers
 const resolvers = {
-  Query: {  
-    hello: () => "Hello, world!",
+  Query: {
     users: () => users,
-    user: (_, { id }) => users.find(user => user.id === id),
+    user: (_, args) => users.find(u => u.id === args.id),
+  },
+
+  // mutation to add points to a user
+  Mutation: {
+    addPoints: (_, { userId, amount }) => {
+      const user = users.find(u => u.id === userId);
+      if (!user) return null;
+
+      user.points += amount;
+      return user;
+    },
   },
 };
+
 
 // Create Apollo Server instance
 const server = new ApolloServer({

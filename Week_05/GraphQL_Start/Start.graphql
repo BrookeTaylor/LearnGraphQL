@@ -1,0 +1,18 @@
+query {
+  hello
+}
+
+query {
+  users{
+    id
+    name
+    points
+  }
+}
+
+query {
+  user(id: 1) {
+    name
+    email
+  }
+}
